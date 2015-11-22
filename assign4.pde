@@ -460,7 +460,7 @@ void keyPressed(){
        bullet[counter%5]=true;
        shoot--;
      }//if
-  }//if 
+  }//if  
   }           
       
 void keyReleased(){
