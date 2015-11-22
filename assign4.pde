@@ -204,8 +204,8 @@ void draw() {
        bulletY[k]=-1000; 
        enemy1[i]=false;     
        flame[0]=true;
-       for(int j=1;j<5;j++){      
-       if(frameCount%(60/10)==0){ 
+       for(int j=0;j<5;j++){      
+       if(j>0){ 
        flame[j]=true;
        flame[j-1]=false;}
        if(flame[j]){
