@@ -76,8 +76,8 @@ void setup () {
   
    //bullet
   for(int i=0;i<5;i++){
-  bulletY[i]=jetY+9;  
-  bulletX[i]=-36;}
+  bulletY[i]=-1000;  
+  bulletX[i]=-1000;}
 
   shoot=5;
   
@@ -132,8 +132,8 @@ void draw() {
      for( int i=0;i<8; i++){
      enemy3[i]=true;}
    for(int i=0;i<5;i++){
-   bulletY[i]=jetY+9;  
-   bulletX[i]=-36;}  
+   bulletY[i]=-1000;  
+   bulletX[i]=-1000;}  
    enemyX=-310;
    enemyY=floor(random(100,415));
    count=1;
@@ -181,8 +181,8 @@ void draw() {
    if(bulletX[i]==0){
    bullet[i]=false;
    shoot++;
-   bulletX[i]=-31;
-   bulletY[i]=0;
+   bulletX[i]=-1000;
+   bulletY[i]=-1000;
   }//if
   
     if(bullet[i]){
@@ -192,11 +192,11 @@ void draw() {
     
     
    //bullet hit enemy
-   for(int k=0;k<5;k++){
+   for(int k = 0;k<5;k++){
    for( int i = 0;i<5;i++){
      if(enemy1[i]){
-     if( X1[i]+enemyImg.width>=bulletX[k]
-      && Y1[i] <= bulletY[k]+shootImg.height && Y1[i] >= bulletY[k]-shootImg.height){
+     if(X1[i] >= bulletX[k]-enemyImg.width
+     && Y1[i] >= bulletY[k]-enemyImg.height && Y1[i] <= bulletY[k]+shootImg.height){
        bullet[k]=false;
        shoot++;
        bulletX[k]=-1000;
@@ -217,15 +217,15 @@ void draw() {
    
    
      
-     if(enemy2[i]){
-      if(X2[i]+enemyImg.width>=bulletX[k]
-      && Y2[i] <= bulletY[k]+shootImg.height && Y2[i] >= bulletY[k]-shootImg.height){
+      if(enemy2[i]){
+      if(X2[i] >= bulletX[k]-enemyImg.width
+      && Y2[i] >= bulletY[k]-enemyImg.height && Y2[i] <= bulletY[k]+shootImg.height){
         bullet[k]=false;
         shoot++;
         bulletX[k]=-1000;
         bulletY[k]=-1000;
-        enemy2[k]=false;     
-       flame[0]=true;
+        enemy2[i]=false;     
+        flame[0]=true;
        for(int j=0;j<5;j++){      
        if(j>0){ 
        flame[j]=true;
@@ -242,25 +242,25 @@ void draw() {
    
    for(int i=0;i<8;i++){
      if(enemy3[i]){
-      if(X3[i]+enemyImg.width>=bulletX[k]
-      && Y3[i] <= bulletY[k]+shootImg.height && Y3[i] >= bulletY[k]-shootImg.height){
+      if(X3[i] >= bulletX[k]-enemyImg.width
+      && Y3[i] >= bulletY[k]-enemyImg.height && Y3[i] <= bulletY[k]+shootImg.height){
          bullet[k]=false;
          shoot++;
          bulletX[k]=-1000;
          bulletY[k]=-1000;
-        enemy3[i]=false;     
-       flame[0]=true;
-       for(int j=0;j<5;j++){      
-       if(j>0){ 
-       flame[j]=true;
-       flame[j-1]=false;
+         enemy3[i]=false;     
+         flame[0]=true;
+         for(int j=0;j<5;j++){      
+         if(j>0){ 
+         flame[j]=true;
+         flame[j-1]=false;
+         }
+         if(flame[j]){
+         image(flameImg[j],X3[i],Y3[i]);}  
         }
-       if(flame[j]){
-       image(flameImg[j],X3[i],Y3[i]);}  
-       }
-      X3[i]=-100;
-      Y3[i]=-100; 
-     }
+        X3[i]=-100;
+        Y3[i]=-100; 
+        }
      }
     }
    }
@@ -480,5 +480,3 @@ void keyReleased(){
           }
         }       
 }
-     
-      
