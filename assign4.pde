@@ -15,7 +15,8 @@ PImage background1,background2,
        shootImg;
 PImage  [] flameImg =new PImage [num];
 boolean []flame= new boolean [num];       
-int hp,treasureX,treasureY,enemyX,enemyY,backgroundX,jetX,jetY;
+int treasureX,treasureY,enemyX,enemyY,backgroundX,jetX,jetY;
+float hp;
 boolean  starting1=true;
 boolean  starting2=false;
 boolean  ending1=false;
@@ -129,8 +130,8 @@ void draw() {
      enemy2[i]=true;
      bullet[i]=false;
      }
-     for( int i=0;i<8; i++){
-     enemy3[i]=true;}
+   for( int i=0;i<8; i++){
+   enemy3[i]=true;}
    for(int i=0;i<5;i++){
    bulletY[i]=-1000;  
    bulletX[i]=-1000;}  
@@ -203,8 +204,8 @@ void draw() {
        bulletY[k]=-1000; 
        enemy1[i]=false;     
        flame[0]=true;
-       for(int j=0;j<5;j++){      
-       if(j>0){ 
+       for(int j=1;j<5;j++){      
+       if(frameCount%(60/10)==0){ 
        flame[j]=true;
        flame[j-1]=false;}
        if(flame[j]){
@@ -250,7 +251,7 @@ void draw() {
          bulletY[k]=-1000;
          enemy3[i]=false;     
          flame[0]=true;
-         for(int j=0;j<5;j++){      
+         for(int j=1;j<5;j++){      
          if(j>0){ 
          flame[j]=true;
          flame[j-1]=false;
@@ -480,3 +481,5 @@ void keyReleased(){
           }
         }       
 }
+     
+      
