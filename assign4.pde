@@ -179,10 +179,6 @@ void draw() {
    
   //bullet
    for(int i=0;i<5;i++){
-    if(bullet[i]){
-    bulletX[i]-=2;} //if    
-    image(shootImg,bulletX[i],bulletY[i]);   
-     
    if(bulletX[i]==0){
    bullet[i]=false;
    shoot++;
@@ -190,7 +186,9 @@ void draw() {
    bulletY[i]=-1000;
   }//if
   
-   
+    if(bullet[i]){
+    bulletX[i]-=2;} //if    
+    image(shootImg,bulletX[i],bulletY[i]);  
     }//for
     
     
