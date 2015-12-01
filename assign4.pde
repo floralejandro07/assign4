@@ -75,13 +75,11 @@ void setup () {
   
    //bullet
   for(int i=0;i<5;i++){
-  bulletY[i]=-1000;  
-  bulletX[i]=-1000;}
+   bullet[i] = false;}
   
   for(int i=0;i<5;i++){
   enemy1[i]=true;
   enemy2[i]=true;
-  bullet[i]=false;
   }
   for(int i=0;i<8;i++){
   enemy3[i]=true;
@@ -174,16 +172,13 @@ void draw() {
    
   //bullet
    for(int i=0;i<5;i++){
-      if(bullet[i]){
-      bulletX[i]-=2; //if    
-      image(shootImg,bulletX[i],bulletY[i]); } 
-     
+      if(bullet[i]){       
+      image(shootImg,bulletX[i],bulletY[i]);
+       bulletX[i]-=2; //if  
+     } 
        if(bulletX[i]<0){
        bullet[i]=false;
-      // println("0 "+shoot);
-      }//if
-  
-   
+      }//if   
     }//for
     
     
@@ -191,8 +186,8 @@ void draw() {
    for(int k = 0;k<5;k++){
    for( int i = 0;i<5;i++){
      if(enemy1[i]){
-     if(X1[i] >= bulletX[k]-enemyImg.width
-     && Y1[i] >= bulletY[k]-enemyImg.height && Y1[i] <= bulletY[k]+shootImg.height
+     if(bulletX[k] >= X1[i] - shootImg.width  && bulletX[k] <=  X1 [i]  + enemyImg.width 
+     && bulletY[k] >= Y1[i] - shootImg.height && bulletY[k] <=  Y1 [i]  + enemyImg.height 
      && bullet[k] == true){
        bullet[k]=false;
        enemy1[i]=false;
@@ -204,8 +199,8 @@ void draw() {
    
      
       if(enemy2[i]){
-      if(X2[i] >= bulletX[k]-enemyImg.width
-      && Y2[i] >= bulletY[k]-enemyImg.height && Y2[i] <= bulletY[k]+shootImg.height
+      if(bulletX[k] >= X2[i] - shootImg.width  && bulletX[k] <=  X2 [i]  + enemyImg.width 
+      && bulletY[k] >= Y2[i] - shootImg.height && bulletY[k] <=  Y2 [i]  + enemyImg.height 
       && bullet[k] == true){
         bullet[k]=false;
         enemy2[i]=false;
@@ -217,12 +212,12 @@ void draw() {
    
    for(int i=0;i<8;i++){
      if(enemy3[i]){
-      if(X3[i] >= bulletX[k]-enemyImg.width
-      && Y3[i] >= bulletY[k]-enemyImg.height && Y3[i] <= bulletY[k]+shootImg.height
-      && bullet[k] == true){
+     if(bulletX[k] >= X3[i] - shootImg.width  && bulletX[k] <= X3 [i]  + enemyImg.width 
+     && bulletY[k] >= Y3[i] - shootImg.height && bulletY[k] <= Y3 [i]  + enemyImg.height 
+     && bullet[k] == true){
          bullet[k]=false;         
          enemy3[i]=false;    
-         X3[i]=-50;
+         X3[i]=-500;
          Y3[i]=-500; 
         }
      }
