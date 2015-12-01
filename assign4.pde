@@ -2,11 +2,9 @@
 final int GAME_START=1, GAME_READY=2, GAME_RUN=3, GAME_LOSE=4;
 int gameState;
 int count=1;
-int counter;
-int shoot;
+int press;
+int shoot=0;
 int num=5;
-int time;
-int inter=100;
 PImage background1,background2,
        ending1Img,ending2Img,
        starting1Img,starting2Img,
@@ -79,8 +77,6 @@ void setup () {
   for(int i=0;i<5;i++){
   bulletY[i]=-1000;  
   bulletX[i]=-1000;}
-
-  shoot=5;
   
   for(int i=0;i<5;i++){
   enemy1[i]=true;
@@ -138,7 +134,6 @@ void draw() {
    enemyX=-310;
    enemyY=floor(random(100,415));
    count=1;
-   shoot=5;
    gameState=GAME_RUN;
    
    break;
@@ -179,16 +174,16 @@ void draw() {
    
   //bullet
    for(int i=0;i<5;i++){
-   if(bulletX[i]==0){
-   bullet[i]=false;
-   shoot++;
-   bulletX[i]=-1000;
-   bulletY[i]=-1000;
-  }//if
+      if(bullet[i]){
+      bulletX[i]-=2; //if    
+      image(shootImg,bulletX[i],bulletY[i]); } 
+     
+       if(bulletX[i]<0){
+       bullet[i]=false;
+      // println("0 "+shoot);
+      }//if
   
-    if(bullet[i]){
-    bulletX[i]-=2;} //if    
-    image(shootImg,bulletX[i],bulletY[i]);  
+   
     }//for
     
     
@@ -197,22 +192,12 @@ void draw() {
    for( int i = 0;i<5;i++){
      if(enemy1[i]){
      if(X1[i] >= bulletX[k]-enemyImg.width
-     && Y1[i] >= bulletY[k]-enemyImg.height && Y1[i] <= bulletY[k]+shootImg.height){
+     && Y1[i] >= bulletY[k]-enemyImg.height && Y1[i] <= bulletY[k]+shootImg.height
+     && bullet[k] == true){
        bullet[k]=false;
-       shoot++;
-       bulletX[k]=-1000;
-       bulletY[k]=-1000; 
-       enemy1[i]=false;     
-       flame[0]=true;
-       for(int j=0;j<5;j++){      
-       if(j>0){ 
-       flame[j]=true;
-       flame[j-1]=false;}
-       if(flame[j]){
-       image(flameImg[j],X1[i],Y1[i]);}  
-       }// for
-      X1[i]=-100;
-      Y1[i]=-100; 
+       enemy1[i]=false;
+       X1[i]=-500;
+       Y1[i]=-500;      
      }//if
     }    
    
@@ -220,23 +205,12 @@ void draw() {
      
       if(enemy2[i]){
       if(X2[i] >= bulletX[k]-enemyImg.width
-      && Y2[i] >= bulletY[k]-enemyImg.height && Y2[i] <= bulletY[k]+shootImg.height){
+      && Y2[i] >= bulletY[k]-enemyImg.height && Y2[i] <= bulletY[k]+shootImg.height
+      && bullet[k] == true){
         bullet[k]=false;
-        shoot++;
-        bulletX[k]=-1000;
-        bulletY[k]=-1000;
-        enemy2[i]=false;     
-        flame[0]=true;
-       for(int j=0;j<5;j++){      
-       if(j>0){ 
-       flame[j]=true;
-       flame[j-1]=false;
-        }
-       if(flame[j]){
-       image(flameImg[j],X2[i],Y2[i]);}  
-       }
-      X2[i]=-100;
-      Y2[i]=-100; 
+        enemy2[i]=false;
+        X2[i]=-500;
+        Y2[i]=-500;      
      }
     }
    }
@@ -244,23 +218,12 @@ void draw() {
    for(int i=0;i<8;i++){
      if(enemy3[i]){
       if(X3[i] >= bulletX[k]-enemyImg.width
-      && Y3[i] >= bulletY[k]-enemyImg.height && Y3[i] <= bulletY[k]+shootImg.height){
-         bullet[k]=false;
-         shoot++;
-         bulletX[k]=-1000;
-         bulletY[k]=-1000;
-         enemy3[i]=false;     
-         flame[0]=true;
-         for(int j=1;j<5;j++){      
-         if(j>0){ 
-         flame[j]=true;
-         flame[j-1]=false;
-         }
-         if(flame[j]){
-         image(flameImg[j],X3[i],Y3[i]);}  
-        }
-        X3[i]=-100;
-        Y3[i]=-100; 
+      && Y3[i] >= bulletY[k]-enemyImg.height && Y3[i] <= bulletY[k]+shootImg.height
+      && bullet[k] == true){
+         bullet[k]=false;         
+         enemy3[i]=false;    
+         X3[i]=-50;
+         Y3[i]=-500; 
         }
      }
     }
@@ -324,11 +287,12 @@ void draw() {
      for(int i=0;i<5;i++){
      enemy1[i]=true;
      enemy2[i]=true;
-     }
+     }//for
      for( int i=0;i<8; i++){
-     enemy3[i]=true;}
+     enemy3[i]=true;}//for
      count++;     
-     enemyX=-312;}
+     enemyX=-312;
+   }//if
      
    
    //jet run into enemy
@@ -336,18 +300,9 @@ void draw() {
      if(enemy1[i]){
    if( Y1[i]>=jetY-jetImg.height && Y1[i] <= jetY+jetImg.height 
     && X1[i]>=jetX-jetImg.height && X1[i] <= jetX+jetImg.height){
-     enemy1[i]=false;     
-     flame[0]=true;
-       for(int j=0;j<5;j++){      
-       if(j>0){ 
-       flame[j]=true;
-       flame[j-1]=false;
-        }
-      if(flame[j]){
-      image(flameImg[j],X1[i],Y1[i]);}  
-      }
-     X1[i]=-100;
-     Y1[i]=-100;     
+     enemy1[i]=false;
+     X1[i]=-500;
+     Y1[i]=-500;         
      hp-=39;     
      
     }    
@@ -356,19 +311,10 @@ void draw() {
      if(enemy2[i]){
      if( Y2[i] >= jetY-jetImg.height && Y2[i] <= jetY+jetImg.height
       && X2[i] >= jetX-jetImg.height && X2[i] <= jetX+jetImg.height){
-     enemy2[i]=false;     
-     flame[0]=true;
-       for(int j=0;j<5;j++){      
-       if(j>0){ 
-       flame[j]=true;
-       flame[j-1]=false;
-        }
-      if(flame[j]){
-      image(flameImg[j],X2[i],Y2[i]);}  
-      }
-     X2[i]=-100;
-     Y2[i]=-100;     
-     hp-=39;
+       enemy2[i]=false;
+       X2[i]=-500;
+       Y2[i]=-500;        
+       hp-=39;
     }    
    }
    }
@@ -376,20 +322,11 @@ void draw() {
    for(int i=0;i<8;i++){
      if(enemy3[i]){
      if( Y3[i]>=jetY - jetImg.height && Y3[i] <= jetY+jetImg.height
-     && X3[i]>=jetX - jetImg.height && X3[i] <= jetX+jetImg.height){
-       enemy3[i]=false;     
-       flame[0]=true;
-       for(int j=0;j<5;j++){      
-       if(j>0){ 
-       flame[j]=true;
-       flame[j-1]=false;
-        }
-       if(flame[j]){
-       image(flameImg[j],X3[i],Y3[i]);}  
-       }
-      X3[i]=-100;
-      Y3[i]=-100;     
-      hp-=39;
+      && X3[i]>=jetX - jetImg.height && X3[i] <= jetX+jetImg.height){
+       enemy3[i]=false;
+       X3[i]=-500;
+       Y3[i]=-500;
+       hp-=39;
      }
     }
    }
@@ -452,15 +389,18 @@ void keyPressed(){
        break;
           }
         }
-  if(key==' '){
-     if(shoot>0){
-       counter++;      
-       bulletX[counter%5]=jetX-15;
-       bulletY[counter%5]=jetY+9;
-       bullet[counter%5]=true;
+  /*if(key==' '){
+      if(shoot>0){
+       press++;
+       press=press%5;
+       bulletX[press]=jetX-15;
+       bulletY[press]=jetY+9;
+       bullet[press]=true; 
+       println(shoot);
        shoot--;
+       
      }//if
-  }//if  
+  }//if */
   }           
       
 void keyReleased(){
@@ -479,7 +419,20 @@ void keyReleased(){
         rightPressed=false;
       break;
           }
-        }       
+        }
+        
+    if ( keyCode == ' '){
+    if (gameState == GAME_RUN){
+      if (bullet[shoot] == false){
+        bullet[shoot] = true;
+        bulletX[shoot] = jetX - 10;
+        bulletY[shoot] = jetY + 9;
+        shoot ++;
+      }   
+      if ( shoot> 4 ) {
+        shoot = 0;
+      }
+    }
+  }
 }
      
-      
